@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/Equipo.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,21 +12,11 @@ class Equipo extends Model
     protected $fillable = [
         'nombre',
         'juegos',
-        'imagen_url', 
+        'imagen_url',
     ];
 
-    public function jugadores()
+    public function campeonatos()
     {
-        return $this->hasMany(Jugador::class);
-    }
-
-    public function partidosLocales()
-    {
-        return $this->hasMany(Partido::class, 'equipo_local_id');
-    }
-
-    public function partidosVisitantes()
-    {
-        return $this->hasMany(Partido::class, 'equipo_visitante_id');
+        return $this->belongsToMany(Campeonato::class, 'equipos_campeonatos')->withPivot('puntos')->withTimestamps();
     }
 }

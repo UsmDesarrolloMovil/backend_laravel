@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/Campeonato.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,16 +14,11 @@ class Campeonato extends Model
         'fecha_inicio',
         'fecha_fin',
         'premios',
-        'detalles'
+        'detalles',
     ];
 
-    public function partidos()
+    public function equipos()
     {
-        return $this->hasMany(Partido::class);
-    }
-
-    public function reglas()
-    {
-        return $this->hasMany(Regla::class);
+        return $this->belongsToMany(Equipo::class, 'equipos_campeonatos')->withPivot('puntos')->withTimestamps();
     }
 }
