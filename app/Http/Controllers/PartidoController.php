@@ -39,4 +39,36 @@ class PartidoController extends Controller
         Partido::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function partidosPorCampeonato($campeonato_id)
+    {
+        // Obtener todos los partidos del campeonato especificado con la información de los equipos
+        $partidos = Partido::where('campeonato_id', $campeonato_id)
+                            ->with(['equipoLocal', 'equipoVisitante', 'resultado'])
+                            ->get();
+
+        // Modificar la estructura de la respuesta si es necesario
+        $modifiedResponse = $partidos->map(function ($partido) {
+            $resultado = $partido->resultado;
+            return [
+                'id' => $partido->id,
+                'campeonato_id' => $partido->campeonato_id,
+                'equipo_local' =>  $partido->equipoLocal->nombre,
+                'equipo_visitante' =>  $partido->equipoVisitante->nombre,
+                
+                'fecha' => $partido->fecha,
+                'lugar' => $partido->lugar, 
+                
+                'id_resultado' => $resultado ? $resultado->id : null,
+                'equipo_ganador_id' => $resultado ? $resultado->equipo_ganador_id : null,
+                'puntos_local' => $resultado ? $resultado->puntos_local : null,
+                'puntos_visitante' => $resultado ? $resultado->puntos_visitante : null,
+                // Agrega más campos si es necesario
+            ];
+        });
+
+        // Devolver la respuesta modificada
+        return response()->json($modifiedResponse);
+    }
+
 }

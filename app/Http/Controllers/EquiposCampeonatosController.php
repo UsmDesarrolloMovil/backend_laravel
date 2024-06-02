@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\EquiposCampeonatos;
+use App\Models\Campeonato;
+
+
 use Illuminate\Http\Request;
 
 class EquiposCampeonatosController extends Controller
@@ -38,4 +41,27 @@ class EquiposCampeonatosController extends Controller
         $equiposCampeonatos->delete();
         return response()->json(null, 204);
     }
+
+    public function equiposPorCampeonato($campeonato_id)
+    {
+        // Obtener el campeonato con sus equipos
+        $campeonato = Campeonato::with('equipos')->findOrFail($campeonato_id);
+
+        // Modificar la estructura de la respuesta si es necesario
+        $equipos = $campeonato->equipos->map(function ($equipo) use ($campeonato) {
+            return [
+                'id' => $equipo->id,
+                'nombre' => $equipo->nombre,
+                'juegos' => $equipo->juegos,
+                'imagen_url' => $equipo->imagen_url,
+                'puntos' => $equipo->pivot->puntos,
+                // Agrega más campos si es necesario
+            ];
+        });
+
+        // Devolver la respuesta modificada
+        return response()->json($equipos);
+    }
+
+
 }
