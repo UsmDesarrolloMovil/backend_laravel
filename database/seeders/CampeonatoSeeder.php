@@ -16,22 +16,22 @@ class CampeonatoSeeder extends Seeder
                 'nombre' => 'Campeonato Mundial de League of Legends',
                 'fecha_inicio' => '2024-06-01',
                 'fecha_fin' => '2024-06-15',
-                'premios' => 'Reglas estándar de Esports',
-                'detalles' => 'Detalles del campeonato',
+                'premios' => '100.000.000 Millones de dolares',
+                'detalles' => 'Será en Japon, el dia 28/05/2024',
             ],
             [
                 'nombre' => 'Campeonato Mundial de Valorant',
                 'fecha_inicio' => '2024-06-01',
                 'fecha_fin' => '2024-06-15',
-                'premios' => 'Reglas estándar de Esports',
-                'detalles' => 'Detalles del campeonato',
+                'premios' => '50.000 pesos argentinos',
+                'detalles' => 'Será en Paris, Francia, el dia 28/05/2024',
             ],
             [
                 'nombre' => 'Campeonato Mundial de Super Smash bros',
                 'fecha_inicio' => '2024-06-01',
                 'fecha_fin' => '2024-06-15',
-                'premios' => 'Reglas estándar de Esports',
-                'detalles' => 'Detalles del campeonato',
+                'premios' => 'Una casa',
+                'detalles' => 'Será en Valparaiso, Chile, el dia 28/05/2024',
             ],
         ]);
        

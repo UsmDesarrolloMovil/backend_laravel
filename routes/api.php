@@ -14,6 +14,10 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
+Route::get("campeonatos/list/{id?}",[CampeonatoController::class,'list']);
+
+
+
 Route::apiResource('campeonatos', CampeonatoController::class);
 Route::apiResource('equipos', EquipoController::class);
 Route::apiResource('jugadores', JugadorController::class);
