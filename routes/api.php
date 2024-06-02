@@ -29,5 +29,4 @@ Route::apiResource('equipos', EquipoController::class);
 Route::apiResource('jugadores', JugadorController::class);
 Route::apiResource('partidos', PartidoController::class);
 Route::apiResource('resultados', ResultadoController::class);
-Route::apiResource('reglas', ReglaController::class);
 Route::apiResource('equipos-campeonatos', EquiposCampeonatosController::class);

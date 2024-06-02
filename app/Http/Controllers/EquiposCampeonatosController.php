@@ -46,8 +46,8 @@ class EquiposCampeonatosController extends Controller
     {
         // Obtener el campeonato con sus equipos
         $campeonato = Campeonato::with('equipos')->findOrFail($campeonato_id);
-
-        // Modificar la estructura de la respuesta si es necesario
+    
+        // Modificar la estructura de la respuesta si es necesario y ordenar por puntos
         $equipos = $campeonato->equipos->map(function ($equipo) use ($campeonato) {
             return [
                 'id' => $equipo->id,
@@ -57,11 +57,12 @@ class EquiposCampeonatosController extends Controller
                 'puntos' => $equipo->pivot->puntos,
                 // Agrega más campos si es necesario
             ];
-        });
-
+        })->sortByDesc('puntos'); // Ordenar la colección por puntos de mayor a menor
+    
         // Devolver la respuesta modificada
         return response()->json($equipos);
     }
+    
 
 
 }

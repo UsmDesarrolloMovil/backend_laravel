@@ -7,16 +7,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Partido extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'campeonato_id',
         'equipo_local_id',
         'equipo_visitante_id',
         'fecha',
-        'lugar'
+        'hora', // Agregar el nuevo campo 'hora' al modelo
+        'lugar',
+        'estado',
     ];
 
     public function campeonato()
