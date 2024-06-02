@@ -39,4 +39,31 @@ class JugadorController extends Controller
         Jugador::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function jugadoresPorEquipo($equipo_id)
+    {
+        // Obtener todos los jugadores del equipo especificado con la información del equipo
+        $jugadores = Jugador::where('equipo_id', $equipo_id)
+                            ->with('equipo') // Eager load del equipo
+                            ->get();
+
+        // Modificar la estructura de la respuesta
+        $modifiedResponse = $jugadores->map(function ($jugador) {
+            return [
+                'id' => $jugador->id,
+                'nombre' => $jugador->nombre,
+                // 'equipo' => [
+                //     'id' => $jugador->equipo->id,
+                //     'nombre' => $jugador->equipo->nombre,
+                //     'juegos' => $jugador->equipo->juegos,
+                //     'imagen_url' => $jugador->equipo->imagen_url,
+                // ],
+                // Agrega más campos si es necesario
+            ];
+        });
+
+        // Devolver la respuesta modificada
+        return response()->json($modifiedResponse);
+    }
+
 }

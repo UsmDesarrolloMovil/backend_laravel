@@ -11,6 +11,9 @@ class Jugador extends Model
 {
     use HasFactory;
 
+    // Especificar el nombre de la tabla
+    protected $table = 'jugadores';
+
     protected $fillable = [
         'nombre',
         'equipo_id'

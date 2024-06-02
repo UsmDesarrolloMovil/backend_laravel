@@ -38,7 +38,10 @@ class CampeonatoController extends Controller
    
 
     public function list($id=null){
+        
         return $id?Campeonato::find($id):Campeonato::all();
+
+        
     }
     public function destroy($id)
     {

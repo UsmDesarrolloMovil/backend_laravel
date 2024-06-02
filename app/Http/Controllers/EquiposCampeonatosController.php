@@ -30,6 +30,8 @@ class EquiposCampeonatosController extends Controller
         return response()->json($equiposCampeonatos, 200);
     }
 
+ 
+
     public function destroy($id)
     {
         $equiposCampeonatos = EquiposCampeonatos::findOrFail($id);

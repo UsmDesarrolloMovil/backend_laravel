@@ -15,6 +15,7 @@ class Campeonato extends Model
         'fecha_fin',
         'premios',
         'detalles',
+        'imagen_url',
     ];
 
     public function equipos()
