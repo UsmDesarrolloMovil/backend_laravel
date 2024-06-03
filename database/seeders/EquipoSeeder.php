@@ -24,7 +24,7 @@ class EquipoSeeder extends Seeder
             [
                 'nombre' => 'G2 Esports',
                 'juegos' => 'League of Legends, Valorant, Rocket League',
-                'imagen_url' => 'https://liquipedia.net/commons/images/thumb/9/9e/G2_Esports_2020_full_darkmode.png/600px-G2_Esports_2020_full_darkmode.png',
+                'imagen_url' => 'https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Esports_organization_G2_Esports_logo.svg/800px-Esports_organization_G2_Esports_logo.svg.png',
             ],
             [
                 'nombre' => 'Team SoloMid',

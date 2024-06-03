@@ -32,7 +32,7 @@ class CampeonatoSeeder extends Seeder
                 'fecha_fin' => '2024-06-15',
                 'premios' => '50.000 pesos argentinos',
                 'detalles' => 'Será en Paris, Francia, el dia 28/05/2024',
-                'imagen_url' => 'https://i.blogs.es/3f15c2/valorant/1366_2000.jpg',
+                'imagen_url' => 'https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltc04e4637524166dc/621853fd6be1e66143a66db2/022822_TakeoverCap_Banner.jpg',
                 'reglas' => json_encode([
                     'El juego se disputará en partidas al mejor de tres.',
                     'Se permiten pausas técnicas de hasta 5 minutos por equipo.',

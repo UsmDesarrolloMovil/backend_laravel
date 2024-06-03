@@ -15,14 +15,14 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get("campeonatos/list/{id?}",[CampeonatoController::class,'list']);
-
+Route::get("equipos/list/{id?}",[EquipoController::class,'list']);
 
 Route::get('jugadores/equipos/{equipo_id}', [JugadorController::class, 'jugadoresPorEquipo']);
-
 
 Route::get('campeonatos/{campeonato_id}/equipos', [EquiposCampeonatosController::class, 'equiposPorCampeonato']);
 
 Route::get('campeonatos/{campeonato_id}/partidos', [PartidoController::class, 'partidosPorCampeonato']);
+
 
 Route::apiResource('campeonatos', CampeonatoController::class);
 Route::apiResource('equipos', EquipoController::class);

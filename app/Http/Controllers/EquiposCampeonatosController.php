@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EquiposCampeonatos;
 use App\Models\Campeonato;
+use App\Http\Controllers\JugadorController;
 
 
 use Illuminate\Http\Request;
@@ -49,13 +50,17 @@ class EquiposCampeonatosController extends Controller
     
         // Modificar la estructura de la respuesta si es necesario y ordenar por puntos
         $equipos = $campeonato->equipos->map(function ($equipo) use ($campeonato) {
+        $jugadores = app(JugadorController::class)->getJugadoresPorEquipo($equipo->id);
             return [
                 'id' => $equipo->id,
                 'nombre' => $equipo->nombre,
                 'juegos' => $equipo->juegos,
                 'imagen_url' => $equipo->imagen_url,
                 'puntos' => $equipo->pivot->puntos,
-                // Agrega más campos si es necesario
+                'jugadores' => $jugadores->map(function ($jugador) {
+                    return $jugador->nombre;
+                }),
+             
             ];
         })->sortByDesc('puntos'); // Ordenar la colección por puntos de mayor a menor
     

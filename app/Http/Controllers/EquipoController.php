@@ -39,4 +39,10 @@ class EquipoController extends Controller
         Equipo::destroy($id);
         return response()->json(null, 204);
     }
+    public function list($id=null){
+        
+        return $id?Equipo::find($id):Equipo::all();
+
+        
+    }
 }
