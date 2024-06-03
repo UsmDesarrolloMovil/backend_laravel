@@ -43,7 +43,7 @@ class JugadorController extends Controller
     public function jugadoresPorEquipo($equipo_id)
     {
         $jugadores = Jugador::where('equipo_id', $equipo_id)
-                            ->with('equipo')
+                            ->with('equipo')->orderBy('id', 'asc')
                             ->get();
         $modifiedResponse = $jugadores->map(function ($jugador) {
             return [
@@ -61,6 +61,7 @@ class JugadorController extends Controller
     {
         return Jugador::where('equipo_id', $equipo_id)
             ->with('equipo')
+            ->orderBy('id', 'asc')
             ->get();
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImagenUrlToCampeonatosTable extends Migration
+class ChangeReglasToStringInCampeonatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddImagenUrlToCampeonatosTable extends Migration
     public function up()
     {
         Schema::table('campeonatos', function (Blueprint $table) {
-            $table->string('imagen_url')->nullable();
+            $table->text('reglas')->change(); // Cambia el tipo de columna a string (texto)
         });
     }
 
@@ -26,7 +26,7 @@ class AddImagenUrlToCampeonatosTable extends Migration
     public function down()
     {
         Schema::table('campeonatos', function (Blueprint $table) {
-            $table->dropColumn('imagen_url');
+            $table->json('reglas')->change(); // Revertir el cambio a tipo JSON en caso de rollback
         });
     }
 }

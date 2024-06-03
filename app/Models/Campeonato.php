@@ -16,7 +16,7 @@ class Campeonato extends Model
         'premios',
         'detalles',
         'imagen_url',
-        'reglas', // Agregar el nuevo campo 'reglas' al modelo
+        'reglas',
     ];
 
     public function equipos()
