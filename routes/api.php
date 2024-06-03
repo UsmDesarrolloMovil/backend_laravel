@@ -23,6 +23,7 @@ Route::get('campeonatos/{campeonato_id}/equipos', [EquiposCampeonatosController:
 
 Route::get('campeonatos/{campeonato_id}/partidos', [PartidoController::class, 'partidosPorCampeonato']);
 
+Route::get('/equipos/{equipo_id}/partidos', [PartidoController::class, 'partidosPorEquipo']);
 
 Route::apiResource('campeonatos', CampeonatoController::class);
 Route::apiResource('equipos', EquipoController::class);

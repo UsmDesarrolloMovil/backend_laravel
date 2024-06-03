@@ -70,9 +70,36 @@ class PartidoController extends Controller
                 // Agrega más campos si es necesario
             ];
         });
-
-        // Devolver la respuesta modificada
         return response()->json($modifiedResponse);
     }
+
+    public function partidosPorEquipo($equipo_id)
+    {
+        $partidos = Partido::where('equipo_local_id', $equipo_id)
+                            ->orWhere('equipo_visitante_id', $equipo_id)
+                            ->with(['equipoLocal', 'equipoVisitante', 'resultado'])
+                            ->get();
+        $modifiedResponse = $partidos->map(function ($partido) {
+            $resultado = $partido->resultado;
+            return [
+                'id' => $partido->id,
+                'campeonato_id' => $partido->campeonato_id,
+                'equipo_local' =>  $partido->equipoLocal->nombre,
+                'imagen_local' => $partido->equipoLocal->imagen_url,
+                'equipo_visitante' =>  $partido->equipoVisitante->nombre,
+                'imagen_visitante' => $partido->equipoVisitante->imagen_url,
+                'fecha' => $partido->fecha,
+                'hora' => $partido->hora,
+                'lugar' => $partido->lugar,
+                'estado' => $partido->estado,
+                'id_resultado' => $resultado ? $resultado->id : null,
+                'equipo_ganador_id' => $resultado ? $resultado->equipo_ganador_id : null,
+                'puntos_local' => $resultado ? $resultado->puntos_local : null,
+                'puntos_visitante' => $resultado ? $resultado->puntos_visitante : null,
+            ];
+        });
+        return response()->json($modifiedResponse);
+    }
+
 
 }
