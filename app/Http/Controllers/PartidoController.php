@@ -5,6 +5,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Partido;
+use App\Models\Equipo;
+
 use Illuminate\Http\Request;
 
 class PartidoController extends Controller
@@ -70,6 +72,7 @@ class PartidoController extends Controller
                 // Agrega más campos si es necesario
             ];
         });
+
         return response()->json($modifiedResponse);
     }
 
@@ -79,6 +82,7 @@ class PartidoController extends Controller
                             ->orWhere('equipo_visitante_id', $equipo_id)
                             ->with(['equipoLocal', 'equipoVisitante', 'resultado'])
                             ->get();
+        $equipo = Equipo::find($equipo_id);
         $modifiedResponse = $partidos->map(function ($partido) {
             $resultado = $partido->resultado;
             return [
@@ -98,7 +102,11 @@ class PartidoController extends Controller
                 'puntos_visitante' => $resultado ? $resultado->puntos_visitante : null,
             ];
         });
-        return response()->json($modifiedResponse);
+        return response()->json([
+            'nombre' => $equipo->nombre,
+            'imagen_url' => $equipo->imagen_url,
+            'partidos' =>$modifiedResponse,
+        ]);
     }
 
 

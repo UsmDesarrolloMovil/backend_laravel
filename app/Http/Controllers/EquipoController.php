@@ -41,8 +41,11 @@ class EquipoController extends Controller
     }
     public function list($id=null){
         
-        return $id?Equipo::find($id):Equipo::all();
-
+        {
+            return $id 
+                ? Equipo::where('id', $id)->orderBy('id')->first()
+                : Equipo::orderBy('id')->get();
+        }
         
     }
 }
