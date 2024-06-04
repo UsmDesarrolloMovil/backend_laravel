@@ -47,6 +47,8 @@ class CampeonatoController extends Controller
     {
         $campeonato=Campeonato::find($id);
         $result=$campeonato->delete();
+
+
         return $result?["Result"=> "DATA HAS BEENn SAVED"]:["Result"=>"Opertaion failed"];
     
     }

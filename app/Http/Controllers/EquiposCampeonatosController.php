@@ -42,6 +42,15 @@ class EquiposCampeonatosController extends Controller
         $equiposCampeonatos->delete();
         return response()->json(null, 204);
     }
+    public function destroyCustom($equipo_id, $campeonato_id)
+{
+    $equiposCampeonatos = EquiposCampeonatos::where('equipo_id', $equipo_id)
+                            ->where('campeonato_id', $campeonato_id)
+                            ->firstOrFail();
+    $equiposCampeonatos->delete();
+    return response()->json(null, 204);
+}
+
 
     public function equiposPorCampeonato($campeonato_id)
     {

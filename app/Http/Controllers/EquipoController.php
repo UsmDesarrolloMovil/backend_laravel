@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipo;
+use App\Models\Campeonato;
 use Illuminate\Http\Request;
 
 class EquipoController extends Controller
@@ -47,6 +48,15 @@ class EquipoController extends Controller
                 : Equipo::orderBy('id')->get();
         }
         
+    }
+
+    public function equiposNoEnCampeonato($campeonato_id)
+    {
+        $equiposEnCampeonato = Campeonato::find($campeonato_id)->equipos->pluck('id');
+
+        $equiposNoEnCampeonato = Equipo::whereNotIn('id', $equiposEnCampeonato)->get();
+
+        return response()->json($equiposNoEnCampeonato);
     }
     
 }
