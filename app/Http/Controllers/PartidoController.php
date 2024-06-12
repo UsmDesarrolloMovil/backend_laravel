@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Partido;
 use App\Models\Equipo;
+use App\Models\Resultado;
 
 use Illuminate\Http\Request;
 
@@ -61,9 +62,9 @@ class PartidoController extends Controller
                 'imagen_visitante' => $partido->equipoVisitante->imagen_url,
 
                 'fecha' => $partido->fecha,
-                'lugar' => $partido->lugar, 
+                'lugar' => $partido->lugar,
                 'hora'=>$partido->hora,
-                
+
                 'estado' => $partido->estado,
                 'id_resultado' => $resultado ? $resultado->id : null,
                 'equipo_ganador_id' => $resultado ? $resultado->equipo_ganador_id : null,
@@ -109,5 +110,34 @@ class PartidoController extends Controller
         ]);
     }
 
+    public function actualizarPartidoResultado(Request $request)
+    {
+        $request->validate([
+            'partido_id' => 'required|exists:partidos,id',
+            'estado' => 'required|string',
+        ]);
+
+        // updatear partido
+        $partido = Partido::find($request->partido_id);
+        $partido->estado = $request->estado;
+        $partido->save();
+
+        // En caso de que vengan mas campos se debe crear Resultado
+        if ($request->has(['equipo_ganador_id', 'puntos_local', 'puntos_visitante'])) {
+            $request->validate([
+                'equipo_ganador_id' => 'required|exists:equipos,id',
+                'puntos_local' => 'required|integer',
+                'puntos_visitante' => 'required|integer',
+            ]);
+            Resultado::create([
+                'partido_id' => $request->partido_id,
+                'equipo_ganador_id' => $request->equipo_ganador_id,
+                'puntos_local' => $request->puntos_local,
+                'puntos_visitante' => $request->puntos_visitante,
+            ]);
+        }
+
+        return response()->json(['message' => 'Operación realizada exitosamente'], 200);
+    }
 
 }

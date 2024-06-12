@@ -29,6 +29,8 @@ Route::get('/equipos/no-en-campeonato/{campeonato_id}', [EquipoController::class
 
 Route::delete('/equipos-campeonatos/{equipo_id}/{campeonato_id}', [EquiposCampeonatosController::class, 'destroyCustom']);
 
+Route::post('/partido/actualizar', [PartidoController::class, 'actualizarPartidoResultado']);
+
 Route::apiResource('campeonatos', CampeonatoController::class);
 Route::apiResource('equipos', EquipoController::class);
 Route::apiResource('jugadores', JugadorController::class);
