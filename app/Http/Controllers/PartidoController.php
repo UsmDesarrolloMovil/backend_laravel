@@ -114,7 +114,7 @@ class PartidoController extends Controller
     {
         $request->validate([
             'partido_id' => 'required|exists:partidos,id',
-            'estado' => 'required|string',
+            'estado' => 'required|integer',
         ]);
 
         // updatear partido
