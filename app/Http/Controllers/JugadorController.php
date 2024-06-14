@@ -53,7 +53,6 @@ class JugadorController extends Controller
             ];
         });
 
-        // Devolver la respuesta modificada
         return response()->json($modifiedResponse);
     }
 

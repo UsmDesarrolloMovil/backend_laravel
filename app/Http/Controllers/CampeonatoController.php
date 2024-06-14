@@ -14,7 +14,7 @@ class CampeonatoController extends Controller
         $campeonatos = Campeonato::all();
         return response()->json($campeonatos);
     }
-   
+
 
     public function show($id)
     {
@@ -35,13 +35,13 @@ class CampeonatoController extends Controller
         return response()->json($campeonato, 200);
     }
 
-   
+
 
     public function list($id=null){
-        
+
         return $id?Campeonato::find($id):Campeonato::all();
 
-        
+
     }
     public function destroy($id)
     {
@@ -50,6 +50,6 @@ class CampeonatoController extends Controller
 
 
         return $result?["Result"=> "DATA HAS BEENn SAVED"]:["Result"=>"Opertaion failed"];
-    
+
     }
 }
