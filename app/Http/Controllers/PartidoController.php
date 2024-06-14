@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Partido;
 use App\Models\Equipo;
 use App\Models\Resultado;
+use App\Models\EquiposCampeonatos;
 
 use Illuminate\Http\Request;
 
@@ -112,32 +113,41 @@ class PartidoController extends Controller
 
     public function actualizarPartidoResultado(Request $request)
     {
-        $request->validate([
-            'partido_id' => 'required|exists:partidos,id',
-            'estado' => 'required|integer',
-        ]);
-
-        // updatear partido
-        $partido = Partido::find($request->partido_id);
-        $partido->estado = $request->estado;
-        $partido->save();
-
-        // En caso de que vengan mas campos se debe crear Resultado
-        if ($request->has(['equipo_ganador_id', 'puntos_local', 'puntos_visitante'])) {
+        {
             $request->validate([
-                'equipo_ganador_id' => 'required|exists:equipos,id',
-                'puntos_local' => 'required|integer',
-                'puntos_visitante' => 'required|integer',
+                'partido_id' => 'required|exists:partidos,id',
+                'estado' => 'required|integer',
             ]);
-            Resultado::create([
-                'partido_id' => $request->partido_id,
-                'equipo_ganador_id' => $request->equipo_ganador_id,
-                'puntos_local' => $request->puntos_local,
-                'puntos_visitante' => $request->puntos_visitante,
-            ]);
+
+            $partido = Partido::find($request->partido_id);
+            $partido->estado = $request->estado;
+            $partido->save();
+
+            if ($request->has(['equipo_ganador_id', 'puntos_local', 'puntos_visitante'])) {
+                $request->validate([
+                    'equipo_ganador_id' => 'required|exists:equipos,id',
+                    'puntos_local' => 'required|integer',
+                    'puntos_visitante' => 'required|integer',
+                ]);
+
+                Resultado::create([
+                    'partido_id' => $request->partido_id,
+                    'equipo_ganador_id' => $request->equipo_ganador_id,
+                    'puntos_local' => $request->puntos_local,
+                    'puntos_visitante' => $request->puntos_visitante,
+                ]);
+
+                $equipoCampeonato = EquiposCampeonatos::where('equipo_id', $request->equipo_ganador_id)
+                    ->where('campeonato_id', $partido->campeonato_id)
+                    ->first();
+
+                if ($equipoCampeonato) {
+                    $equipoCampeonato->puntos += 3;
+                    $equipoCampeonato->save();
+                }
+            }
+
+            return response()->json(['message' => 'Operación realizada exitosamente'], 200);
         }
-
-        return response()->json(['message' => 'Operación realizada exitosamente'], 200);
     }
-
 }
