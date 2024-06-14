@@ -111,15 +111,18 @@ class PartidoController extends Controller
     public function actualizarPartidoResultado(Request $request)
     {
         {
+            // Validar los datos recibidos
             $request->validate([
                 'partido_id' => 'required|exists:partidos,id',
                 'estado' => 'required|integer',
             ]);
 
+            // Actualizar el estado del partido
             $partido = Partido::find($request->partido_id);
             $partido->estado = $request->estado;
             $partido->save();
 
+            // Verificar si vienen los campos adicionales para crear el resultado
             if ($request->has(['equipo_ganador_id', 'puntos_local', 'puntos_visitante'])) {
                 $request->validate([
                     'equipo_ganador_id' => 'required|exists:equipos,id',
@@ -127,6 +130,7 @@ class PartidoController extends Controller
                     'puntos_visitante' => 'required|integer',
                 ]);
 
+                // Crear un nuevo registro en la tabla resultados
                 Resultado::create([
                     'partido_id' => $request->partido_id,
                     'equipo_ganador_id' => $request->equipo_ganador_id,
@@ -134,6 +138,7 @@ class PartidoController extends Controller
                     'puntos_visitante' => $request->puntos_visitante,
                 ]);
 
+                // Añadir 3 puntos al equipo ganador
                 $equipoCampeonato = EquiposCampeonatos::where('equipo_id', $request->equipo_ganador_id)
                     ->where('campeonato_id', $partido->campeonato_id)
                     ->first();
@@ -146,5 +151,4 @@ class PartidoController extends Controller
 
             return response()->json(['message' => 'Operación realizada exitosamente'], 200);
         }
-    }
-}
+}}

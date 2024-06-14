@@ -27,7 +27,12 @@ class EquiposCampeonatosSeeder extends Seeder
                 'equipo_id' => 1,
                 'puntos' => 1,
             ],
-            
+            [
+                'campeonato_id' => 1,
+                'equipo_id' => 5,
+                'puntos' => 0,
+            ],
+
         ]);
     }
 }
